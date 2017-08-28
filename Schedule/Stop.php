@@ -26,7 +26,7 @@ class Stop
     private $slug;
 
     /**
-     * @var Time[]
+     * @var StopTime[]
      */
     private $times = [];
 
@@ -35,7 +35,7 @@ class Stop
      * @param int $id
      * @param string $name
      * @param string $slug
-     * @param Time[] $times
+     * @param StopTime[] $times
      */
     public function __construct(int $id, string $name, string $slug, array $times)
     {
@@ -70,7 +70,7 @@ class Stop
     }
 
     /**
-     * @return Time[]
+     * @return StopTime[]
      */
     public function getTimes(): array
     {

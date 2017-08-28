@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Itmedia\ZippyBusBundle\Tests\Schedule;
 
-use Itmedia\ZippyBusBundle\Schedule\Time;
+use Itmedia\ZippyBusBundle\Schedule\StopTime;
 use PHPUnit\Framework\TestCase;
 
 class TimeTest extends TestCase
@@ -19,7 +19,7 @@ class TimeTest extends TestCase
      */
     public function testFormat(int $minutes, int $h, int $m)
     {
-        $time = new Time($minutes);
+        $time = new StopTime($minutes);
 
         $this->assertEquals($h, $time->getHour());
         $this->assertEquals($m, $time->getMinute());
@@ -40,15 +40,15 @@ class TimeTest extends TestCase
 
     public function testSub()
     {
-        $time = new Time(1511);
+        $time = new StopTime(1511);
         $this->assertEquals(1, $time->getHour());
         $this->assertEquals(11, $time->getMinute());
 
-        $time = $time->sub(new Time(2));
+        $time = $time->sub(new StopTime(2));
         $this->assertEquals(1, $time->getHour());
         $this->assertEquals(9, $time->getMinute());
 
-        $time = $time->sub(new Time(70));
+        $time = $time->sub(new StopTime(70));
         $this->assertEquals(23, $time->getHour());
         $this->assertEquals(59, $time->getMinute());
     }

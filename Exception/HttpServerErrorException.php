@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Itmedia\ZippyBusBundle\Exception;
 
-class HttpException extends ZippyBusException
+class HttpServerErrorException extends HttpException
 {
 
 }
