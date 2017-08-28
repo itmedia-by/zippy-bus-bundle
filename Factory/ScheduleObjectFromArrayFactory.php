@@ -13,7 +13,6 @@ use Itmedia\ZippyBusBundle\Schedule\StopTime;
 
 class ScheduleObjectFromArrayFactory
 {
-
     public function createCity(array $array): City
     {
         $version = 0;
@@ -67,7 +66,5 @@ class ScheduleObjectFromArrayFactory
             (string)$array['uniqueTechName'],
             $times
         );
-
     }
-
 }

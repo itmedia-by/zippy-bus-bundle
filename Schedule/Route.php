@@ -88,6 +88,4 @@ class Route
     {
         return $this->directions;
     }
-
-
 }

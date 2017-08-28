@@ -67,6 +67,4 @@ class StopTime
     {
         return $this->short;
     }
-
-
 }

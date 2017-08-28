@@ -60,10 +60,8 @@ class ZippyBusClient
         }
 
         try {
-
             $response = $client->get($path, $options);
             return \GuzzleHttp\json_decode((string)$response->getBody(), true);
-
         } catch (ClientException $exception) {
             switch ($exception->getCode()) {
                 case 401:
@@ -79,6 +77,4 @@ class ZippyBusClient
             throw new ZippyBusException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
-
-
 }

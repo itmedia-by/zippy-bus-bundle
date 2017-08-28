@@ -10,13 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class ZippyBusClientTest extends TestCase
 {
-
-
     public function testGet()
     {
         $client = new ZippyBusClient(Token::TOKEN);
         $content = $client->get('cities/?include=currentVersions');
         $this->assertNotEmpty($content);
     }
-
 }

@@ -43,5 +43,4 @@ class Date
 
         return $day;
     }
-
 }

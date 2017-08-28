@@ -73,6 +73,4 @@ class Direction
     {
         return $this->days;
     }
-
-
 }

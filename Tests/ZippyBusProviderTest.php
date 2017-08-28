@@ -14,10 +14,8 @@ use PHPUnit\Framework\TestCase;
 
 class ZippyBusProviderTest extends TestCase
 {
-
     public function testGetCity()
     {
-
         $responseJson = '{"id":1,"name":"Лида","uniqueTechName":"lida","timeZone":"Europe/Minsk","currentVersions":[{"id":362,"cityId":1,"transportTypeId":1,"startDate":"2017-08-03T13:08:15.78689","uniqueTechName":"1-201708030807"}]}';
 
         $client = $this->createClientMock($responseJson);
@@ -92,7 +90,6 @@ class ZippyBusProviderTest extends TestCase
         $this->assertEquals('Индустриальный', $stop->getName());
         $this->assertEquals('industrialnyy', $stop->getSlug());
         $this->assertCount(44, $stop->getTimes());
-
     }
 
 
@@ -109,5 +106,4 @@ class ZippyBusProviderTest extends TestCase
 
         return $mock;
     }
-
 }

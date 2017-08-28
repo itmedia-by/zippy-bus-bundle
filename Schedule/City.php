@@ -58,6 +58,4 @@ class City
     {
         return $this->version;
     }
-
-
 }

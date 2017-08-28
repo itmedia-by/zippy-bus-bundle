@@ -50,7 +50,6 @@ class ZippyBusProvider
      */
     public function getRoutes(City $city, Date $date): array
     {
-
         $content = $this->client->get('routes', [], [
             'versionId' => $city->getVersion(),
             'include' => 'directions'
@@ -86,6 +85,4 @@ class ZippyBusProvider
 
         return $stops;
     }
-
-
 }

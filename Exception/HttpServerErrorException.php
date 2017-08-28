@@ -6,5 +6,4 @@ namespace Itmedia\ZippyBusBundle\Exception;
 
 class HttpServerErrorException extends HttpException
 {
-
 }

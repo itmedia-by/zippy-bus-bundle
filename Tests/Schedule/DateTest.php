@@ -34,5 +34,4 @@ class DateTest extends TestCase
             ['29.08.2017 12:35', 2],
         ];
     }
-
 }

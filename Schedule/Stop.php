@@ -76,6 +76,4 @@ class Stop
     {
         return $this->times;
     }
-
-
 }

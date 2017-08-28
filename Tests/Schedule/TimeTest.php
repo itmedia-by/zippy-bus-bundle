@@ -52,6 +52,4 @@ class TimeTest extends TestCase
         $this->assertEquals(23, $time->getHour());
         $this->assertEquals(59, $time->getMinute());
     }
-
-
 }
