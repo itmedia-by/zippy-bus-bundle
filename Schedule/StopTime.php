@@ -26,19 +26,26 @@ class StopTime
      */
     private $short;
 
+    /**
+     * Заметка
+     * @var string
+     */
+    private $note = '';
 
-    public function __construct(int $time, bool $short = false)
+
+    public function __construct(int $time, bool $short = false, string $note = '')
     {
         $this->time = $time;
         $this->short = $short;
+        $this->note = $note;
     }
 
 
     public static function createNow(): StopTime
     {
         $date = new \DateTime();
-        $hour = (int)$date->format('h');
-        $hour = $hour > 3 ?: $hour + 24;
+        $hour = (int)$date->format('H');
+        $hour = $hour > 3 ? $hour : $hour + 24;
         $minute = (int)$date->format('i');
         return new self($hour * 60 + $minute);
     }
@@ -67,4 +74,23 @@ class StopTime
     {
         return $this->short;
     }
+
+    /**
+     * Время в минутах
+     * @return int
+     */
+    public function getTime(): int
+    {
+        return $this->time;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNote(): string
+    {
+        return $this->note;
+    }
+
+
 }

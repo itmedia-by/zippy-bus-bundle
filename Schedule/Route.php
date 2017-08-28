@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Itmedia\ZippyBusBundle\Schedule;
 
-class Route
+class Route implements SlugAware
 {
 
     /**

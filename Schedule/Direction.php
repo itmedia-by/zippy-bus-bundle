@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Itmedia\ZippyBusBundle\Schedule;
 
-class Direction
+class Direction implements SlugAware
 {
     /**
      * @var int
@@ -73,4 +73,5 @@ class Direction
     {
         return $this->days;
     }
+
 }

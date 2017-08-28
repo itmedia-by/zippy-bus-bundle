@@ -1,5 +1,19 @@
 services:
 
-    _defaults:
-        autowire: true
+    itmedia_zippy_bus.client:
+        class: Itmedia\ZippyBusBundle\Client\ZippyBusClient
+        arguments: ['%itmedia_zippy_bus.token%']
+        public: false
+
+
+    itmedia_zippy_bus.factory:
+        class: Itmedia\ZippyBusBundle\Factory\ScheduleObjectFromArrayFactory
+        public: false
+
+
+    itmedia_zippy_bus.provider:
+        class: Itmedia\ZippyBusBundle\ZippyBusProvider
+        arguments:
+            - '@itmedia_zippy_bus.client'
+            - '@itmedia_zippy_bus.factory'
 

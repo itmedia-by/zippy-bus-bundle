@@ -22,7 +22,8 @@ class ScheduleObjectFromArrayFactory
 
         return new City(
             (int)$array['id'],
-            (string)$array['name'], $version
+            (string)$array['name'],
+            $version
         );
     }
 
@@ -57,7 +58,11 @@ class ScheduleObjectFromArrayFactory
     {
         $times = [];
         foreach ($array['schedule']['minutes'] ?? [] as $minute) {
-            $times[] = new StopTime((int)$minute);
+            $times[] = new StopTime((int)$minute, false);
+        }
+
+        foreach ($array['schedule']['partialMinutes'][0]['minutes'] ?? [] as $minute) {
+            $times[] = new StopTime((int)$minute, true, $array['schedule']['partialMinutes'][0]['notes'] ?? '');
         }
 
         return new Stop(

@@ -50,9 +50,12 @@ class ZippyBusProvider
      */
     public function getRoutes(City $city, Date $date): array
     {
+
         $content = $this->client->get('routes', [], [
-            'versionId' => $city->getVersion(),
-            'include' => 'directions'
+            'query' => [
+                'versionId' => $city->getVersion(),
+                'include' => 'directions'
+            ]
         ]);
 
         $routes = [];
@@ -71,9 +74,11 @@ class ZippyBusProvider
     public function getDirectionStops(Direction $direction): array
     {
         $content = $this->client->get('stops', [], [
-            'directionId' => $direction->getId(),
-            'include' => 'schedule',
-            'scheduleInclude' => 'partialMinutes'
+            'query' => [
+                'directionId' => $direction->getId(),
+                'include' => 'schedule',
+                'scheduleInclude' => 'partialMinutes'
+            ]
         ]);
 
 

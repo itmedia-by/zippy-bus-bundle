@@ -7,7 +7,7 @@ namespace Itmedia\ZippyBusBundle\Schedule;
 /**
  * Остановка
  */
-class Stop
+class Stop implements SlugAware
 {
 
     /**
@@ -75,5 +75,17 @@ class Stop
     public function getTimes(): array
     {
         return $this->times;
+    }
+
+
+    public function getNearStopTime(StopTime $currentTime): ?StopTime
+    {
+        foreach ($this->times as $time) {
+            if ($currentTime->getTime() < $time->getTime()) {
+                return $time;
+            }
+        }
+
+        return null;
     }
 }

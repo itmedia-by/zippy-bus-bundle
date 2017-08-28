@@ -12,7 +12,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('itmedia_zippy_bus');
+        $rootNode = $treeBuilder->root('itmedia_zippy_bus')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('token')->end()
+            ->end();
 
         return $treeBuilder;
     }
