@@ -20,5 +20,6 @@ class ItmediaZippyBusExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('itmedia_zippy_bus.token', $config['token']);
+        $container->setParameter('itmedia_zippy_bus.cache_ttl', $config['cache_ttl']);
     }
 }

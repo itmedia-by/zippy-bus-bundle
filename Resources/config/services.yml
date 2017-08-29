@@ -8,6 +8,7 @@ services:
         arguments:
             - '%itmedia_zippy_bus.token%'
             - '@itmedia_zippy_bus.cache'
+            - '%itmedia_zippy_bus.cache_ttl%'
         public: false
 
 
@@ -25,3 +26,4 @@ services:
 
     itmedia_zippy_bus.cache:
         class: Symfony\Component\Cache\Simple\PhpFilesCache
+        public: false

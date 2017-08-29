@@ -15,6 +15,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('itmedia_zippy_bus')
             ->addDefaultsIfNotSet()
             ->children()
+            ->integerNode('cache_ttl')->defaultValue(3600)->end()
             ->scalarNode('token')->end()
             ->end();
 
