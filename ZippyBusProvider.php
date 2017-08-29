@@ -63,6 +63,10 @@ class ZippyBusProvider
             $routes[] = $this->factory->createRoute($routeArray, $date);
         }
 
+        usort($routes, function (Route $routeA, Route $routeB) {
+            return strnatcmp($routeA->getName(), $routeB->getName());
+        });
+
         return $routes;
     }
 
