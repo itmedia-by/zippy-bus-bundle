@@ -32,14 +32,13 @@ class ZippyBusClient
      */
     private $httpClient;
 
-    /**
-     * ZippyBusClient constructor.
-     * @param string $token
-     * @param CacheInterface $cache
-     */
-    public function __construct(string $token, CacheInterface $cache = null)
+    private $cacheTtl;
+
+
+    public function __construct(string $token, CacheInterface $cache, int $cacheTtl = 3600)
     {
         $this->cache = $cache;
+        $this->cacheTtl = $cacheTtl;
 
         $this->httpClient = new Client([
             'base_uri' => $this->apiUrl,
@@ -51,8 +50,24 @@ class ZippyBusClient
     }
 
 
+    /**
+     * Запрос к сервису
+     *
+     * @param string $path Путь к ресурсу (без  `https://zippybus.com/api/v1/`)
+     * @param array $params Параметры автоподстановки пути, вида `['id' => 'value']`, путь должен быть вида `/resource/{id}`
+     * @param array $options Опции GuzzleClient
+     * @return array
+     * @throws \Exception
+     */
     public function get(string $path, array $params = [], array $options = []): array
     {
+        $cacheKey = md5(sprintf('%s.%s.%s', $path, \json_encode($params), \json_encode($options)));
+
+        $content = $this->cache->get($cacheKey);
+        if ($content) {
+            return $content;
+        }
+
         $client = $this->httpClient;
 
         foreach ($params as $param => $value) {
@@ -61,20 +76,31 @@ class ZippyBusClient
 
         try {
             $response = $client->get($path, $options);
-            return \GuzzleHttp\json_decode((string)$response->getBody(), true);
-        } catch (ClientException $exception) {
+            $content = \GuzzleHttp\json_decode((string)$response->getBody(), true);
+            $this->cache->set($cacheKey, $content, $this->cacheTtl);
+            return $content;
+
+        } catch (\Exception $exception) {
+            throw $this->handleException($exception);
+        }
+    }
+
+
+    public function handleException(\Exception $exception): \Throwable
+    {
+        if ($exception instanceof ClientException) {
             switch ($exception->getCode()) {
                 case 401:
-                    throw new HttpUnauthorizedException('Unauthorized', 401, $exception);
+                    return new HttpUnauthorizedException('Unauthorized', 401, $exception);
                 case 403:
-                    throw new HttpForbiddenException('Forbidden', 403, $exception);
+                    return new HttpForbiddenException('Forbidden', 403, $exception);
                 default:
-                    throw new HttpBadRequestException($exception->getMessage(), $exception->getCode(), $exception);
+                    return new HttpBadRequestException($exception->getMessage(), $exception->getCode(), $exception);
             }
-        } catch (ServerException $exception) {
-            throw new HttpServerErrorException($exception->getMessage(), $exception->getCode(), $exception);
-        } catch (\Exception $exception) {
-            throw new ZippyBusException($exception->getMessage(), $exception->getCode(), $exception);
         }
+        if ($exception instanceof ServerException) {
+            return new HttpServerErrorException($exception->getMessage(), $exception->getCode(), $exception);
+        }
+        return new ZippyBusException($exception->getMessage(), $exception->getCode(), $exception);
     }
 }

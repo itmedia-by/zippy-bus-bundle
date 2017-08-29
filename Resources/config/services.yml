@@ -1,8 +1,13 @@
+parameters:
+    cache_service: itmedia_zippy_bus.cache
+
 services:
 
     itmedia_zippy_bus.client:
         class: Itmedia\ZippyBusBundle\Client\ZippyBusClient
-        arguments: ['%itmedia_zippy_bus.token%']
+        arguments:
+            - '%itmedia_zippy_bus.token%'
+            - '@itmedia_zippy_bus.cache'
         public: false
 
 
@@ -17,3 +22,6 @@ services:
             - '@itmedia_zippy_bus.client'
             - '@itmedia_zippy_bus.factory'
 
+
+    itmedia_zippy_bus.cache:
+        class: Symfony\Component\Cache\Simple\PhpFilesCache
