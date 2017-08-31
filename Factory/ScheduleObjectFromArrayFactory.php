@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Itmedia\ZippyBusBundle\Factory;
 
 use Itmedia\ZippyBusBundle\Schedule\City;
-use Itmedia\ZippyBusBundle\Schedule\Date;
+use Itmedia\ZippyBusBundle\Schedule\ScheduleDate;
 use Itmedia\ZippyBusBundle\Schedule\Direction;
 use Itmedia\ZippyBusBundle\Schedule\Route;
 use Itmedia\ZippyBusBundle\Schedule\Stop;
@@ -28,7 +28,7 @@ class ScheduleObjectFromArrayFactory
     }
 
 
-    public function createRoute(array $array, Date $date): Route
+    public function createRoute(array $array, ScheduleDate $date): Route
     {
         $directions = [];
         foreach ($array['directions'] ?? [] as $directionArray) {
@@ -58,11 +58,11 @@ class ScheduleObjectFromArrayFactory
     {
         $times = [];
         foreach ($array['schedule']['minutes'] ?? [] as $minute) {
-            $times[] = new StopTime((int)$minute, false);
+            $times[(int) $minute] = new StopTime((int)$minute, false);
         }
 
         foreach ($array['schedule']['partialMinutes'][0]['minutes'] ?? [] as $minute) {
-            $times[] = new StopTime((int)$minute, true, $array['schedule']['partialMinutes'][0]['notes'] ?? '');
+            $times[(int) $minute] = new StopTime((int)$minute, true, $array['schedule']['partialMinutes'][0]['notes'] ?? '');
         }
 
         return new Stop(

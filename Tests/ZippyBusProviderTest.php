@@ -7,7 +7,7 @@ namespace Itmedia\ZippyBusBundle\Tests;
 use Itmedia\ZippyBusBundle\Client\ZippyBusClient;
 use Itmedia\ZippyBusBundle\Factory\ScheduleObjectFromArrayFactory;
 use Itmedia\ZippyBusBundle\Schedule\City;
-use Itmedia\ZippyBusBundle\Schedule\Date;
+use Itmedia\ZippyBusBundle\Schedule\ScheduleDate;
 use Itmedia\ZippyBusBundle\Schedule\Direction;
 use Itmedia\ZippyBusBundle\ZippyBusProvider;
 use PHPUnit\Framework\TestCase;
@@ -37,11 +37,11 @@ class ZippyBusProviderTest extends TestCase
         $client = $this->createClientMock($responseJson);
         $provider = new ZippyBusProvider($client, new ScheduleObjectFromArrayFactory());
 
-        $date = new Date(new \DateTimeImmutable('28.08.2017 12:00'));
+        $date = new ScheduleDate(new \DateTimeImmutable('28.08.2017 12:00'));
 
         $routes = $provider->getRoutes(new City(1, 'Lida', 132), $date);
 
-        $route = $routes[5];
+        $route = $routes[1];
         $this->assertEquals('2', $route->getName());
         $this->assertEquals(32777, $route->getId());
         $this->assertCount(2, $route->getDirections());
@@ -53,10 +53,10 @@ class ZippyBusProviderTest extends TestCase
         $this->assertEquals(115919, $direction->getId());
 
 
-        $date = new Date(new \DateTimeImmutable('27.08.2017 12:00'));
+        $date = new ScheduleDate(new \DateTimeImmutable('27.08.2017 12:00'));
         $routes = $provider->getRoutes(new City(1, 'Lida', 132), $date);
 
-        $route = $routes[5];
+        $route = $routes[1];
         $this->assertEquals('2', $route->getName());
         $this->assertEquals(32777, $route->getId());
         $this->assertCount(2, $route->getDirections());

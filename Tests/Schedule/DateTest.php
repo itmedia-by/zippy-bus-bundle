@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Itmedia\ZippyBusBundle\Tests\Schedule;
 
-use Itmedia\ZippyBusBundle\Schedule\Date;
+use Itmedia\ZippyBusBundle\Schedule\ScheduleDate;
 use PHPUnit\Framework\TestCase;
 
 class DateTest extends TestCase
@@ -18,7 +18,7 @@ class DateTest extends TestCase
      */
     public function testGetWeekDay(string $dateString, int $day)
     {
-        $date = new Date(new \DateTimeImmutable($dateString));
+        $date = new ScheduleDate(new \DateTimeImmutable($dateString));
         $this->assertEquals($day, $date->getWeekDay());
     }
 
@@ -34,4 +34,32 @@ class DateTest extends TestCase
             ['29.08.2017 12:35', 2],
         ];
     }
+
+
+    public function testCreateNow()
+    {
+        $date = ScheduleDate::createNow();
+        $actualDayNumber = (int)date('N');
+        if (date('H') < 4) {
+            $actualDayNumber = $actualDayNumber === 1 ? 7 : $actualDayNumber - 1;
+        }
+
+        $this->assertEquals($actualDayNumber, $date->getWeekDay());
+    }
+
+
+    public function testCreateWeekend()
+    {
+        $date = ScheduleDate::createWeekend();
+        $this->assertEquals(7, $date->getWeekDay());
+        $this->assertEquals(ScheduleDate::WEEKEND, $date->getTypeDay());
+    }
+
+
+    public function testCreateWorkday()
+    {
+        $date = ScheduleDate::createWorkday();
+        $this->assertEquals(ScheduleDate::WORKDAY, $date->getTypeDay());
+    }
+
 }

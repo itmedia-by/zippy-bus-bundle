@@ -7,7 +7,7 @@ namespace Itmedia\ZippyBusBundle;
 use Itmedia\ZippyBusBundle\Client\ZippyBusClient;
 use Itmedia\ZippyBusBundle\Factory\ScheduleObjectFromArrayFactory;
 use Itmedia\ZippyBusBundle\Schedule\City;
-use Itmedia\ZippyBusBundle\Schedule\Date;
+use Itmedia\ZippyBusBundle\Schedule\ScheduleDate;
 use Itmedia\ZippyBusBundle\Schedule\Direction;
 use Itmedia\ZippyBusBundle\Schedule\Route;
 use Itmedia\ZippyBusBundle\Schedule\Stop;
@@ -45,10 +45,10 @@ class ZippyBusProvider
 
     /**
      * @param City $city
-     * @param Date $date
+     * @param ScheduleDate $date
      * @return Route[]
      */
-    public function getRoutes(City $city, Date $date): array
+    public function getRoutes(City $city, ScheduleDate $date): array
     {
 
         $content = $this->client->get('routes', [], [

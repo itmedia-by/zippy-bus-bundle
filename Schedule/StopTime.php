@@ -30,7 +30,7 @@ class StopTime
      * Заметка
      * @var string
      */
-    private $note = '';
+    private $note;
 
 
     public function __construct(int $time, bool $short = false, string $note = '')
@@ -75,6 +75,15 @@ class StopTime
         return $this->short;
     }
 
+
+    public function getTimeFormat(): string
+    {
+        return sprintf('%s:%s',
+            $this->getHour(),
+            $this->getMinute() < 10 ? '0' . $this->getMinute() : $this->getMinute()
+        );
+    }
+
     /**
      * Время в минутах
      * @return int
@@ -84,13 +93,9 @@ class StopTime
         return $this->time;
     }
 
-    /**
-     * @return string
-     */
     public function getNote(): string
     {
         return $this->note;
     }
-
 
 }
