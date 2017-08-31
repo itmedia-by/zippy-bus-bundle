@@ -79,7 +79,6 @@ class ZippyBusClient
             $content = \GuzzleHttp\json_decode((string)$response->getBody(), true);
             $this->cache->set($cacheKey, $content, $this->cacheTtl);
             return $content;
-
         } catch (\Exception $exception) {
             throw $this->handleException($exception);
         }

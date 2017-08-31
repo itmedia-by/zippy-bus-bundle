@@ -97,5 +97,4 @@ class StopTime
     {
         return $this->note;
     }
-
 }

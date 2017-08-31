@@ -73,5 +73,4 @@ class Direction implements SlugAware
     {
         return $this->days;
     }
-
 }

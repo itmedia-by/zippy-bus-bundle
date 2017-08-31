@@ -61,5 +61,4 @@ class DateTest extends TestCase
         $date = ScheduleDate::createWorkday();
         $this->assertEquals(ScheduleDate::WORKDAY, $date->getTypeDay());
     }
-
 }

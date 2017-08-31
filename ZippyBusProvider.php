@@ -50,7 +50,6 @@ class ZippyBusProvider
      */
     public function getRoutes(City $city, ScheduleDate $date): array
     {
-
         $content = $this->client->get('routes', [], [
             'query' => [
                 'versionId' => $city->getVersion(),
