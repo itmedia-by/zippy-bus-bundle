@@ -25,5 +25,5 @@ services:
 
 
     itmedia_zippy_bus.cache:
-        class: Symfony\Component\Cache\Simple\PhpFilesCache
+        class: Symfony\Component\Cache\Simple\FilesystemCache
         public: false

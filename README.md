@@ -1,10 +1,10 @@
-ZippyBus клиент
+ZippyBus client
 ===============
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itmedia-by/zippy-bus-bundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/itmedia-by/zippy-bus-bundle/?branch=develop)
 [![Build Status](https://scrutinizer-ci.com/g/itmedia-by/zippy-bus-bundle/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/itmedia-by/zippy-bus-bundle/build-status/develop)
 
-Интеграция с сервисом [ZippyBus](https://zippybus.com/):
+Интеграция с сервисом [ZippyBus.com](https://zippybus.com/):
 - Symfony 3.0+
 - Нативный PHP 7.0+
 
