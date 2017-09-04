@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Itmedia\ZippyBusBundle\Factory;
 
 use Itmedia\ZippyBusBundle\Schedule\City;
-use Itmedia\ZippyBusBundle\Schedule\ScheduleDate;
 use Itmedia\ZippyBusBundle\Schedule\Direction;
 use Itmedia\ZippyBusBundle\Schedule\Route;
+use Itmedia\ZippyBusBundle\Schedule\ScheduleDate;
 use Itmedia\ZippyBusBundle\Schedule\Stop;
 use Itmedia\ZippyBusBundle\Schedule\StopTime;
 
@@ -16,14 +16,19 @@ class ScheduleObjectFromArrayFactory
     public function createCity(array $array): City
     {
         $version = 0;
+        $dateUpdated = null;
         if (isset($array['currentVersions'][0])) {
-            $version = (int)$array['currentVersions'][0]['id'];
+            $versionData = $array['currentVersions'][0];
+            $dateUpdated = new \DateTime($versionData['startDate']);
+            $version = (int)$versionData['id'];
         }
+
 
         return new City(
             (int)$array['id'],
             (string)$array['name'],
-            $version
+            $version,
+            $dateUpdated ?: new \DateTime('now')
         );
     }
 
@@ -58,11 +63,11 @@ class ScheduleObjectFromArrayFactory
     {
         $times = [];
         foreach ($array['schedule']['minutes'] ?? [] as $minute) {
-            $times[(int) $minute] = new StopTime((int)$minute, false);
+            $times[(int)$minute] = new StopTime((int)$minute, false);
         }
 
         foreach ($array['schedule']['partialMinutes'][0]['minutes'] ?? [] as $minute) {
-            $times[(int) $minute] = new StopTime((int)$minute, true, $array['schedule']['partialMinutes'][0]['notes'] ?? '');
+            $times[(int)$minute] = new StopTime((int)$minute, true, $array['schedule']['partialMinutes'][0]['notes'] ?? '');
         }
 
         return new Stop(

@@ -23,16 +23,22 @@ class City
     private $version;
 
     /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
      * City constructor.
      * @param int $id
      * @param string $name
      * @param int $version
      */
-    public function __construct(int $id, string $name, int $version)
+    public function __construct(int $id, string $name, int $version, \DateTime $updatedAt)
     {
         $this->id = $id;
         $this->name = $name;
         $this->version = $version;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -57,5 +63,10 @@ class City
     public function getVersion(): int
     {
         return $this->version;
+    }
+
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
     }
 }
