@@ -13,6 +13,11 @@ ZippyBus client
 ---------------------
 
 
+```bash
+composer require itmedia/zippy-bus-bundle
+```
+
+
 ### Symfony 3
 
 app/AppKernel.php: 
@@ -78,4 +83,23 @@ $zippyBusProvider = new ZippyBusProvider($apiClient, new ScheduleObjectFromArray
 Примеры использования
 ---------------------
 
-@todo
+
+```php
+
+// Текущая дата расписания
+$scheduleDate = ScheduleDate::createNow();
+
+// Город (Лида)
+$city = $zippyBusProvider->getCity(1); 
+
+// Доступные маршруты с направлениями на текущую дату 
+$routes = $zippyBusProvider->getRoutes($city, $scheduleDate);
+
+
+// $direction = $route->getDirections()[0];
+
+// Получить список остановок с расписанием движения для каждой остановки  
+$stops = $this->zippyBus()->getDirectionStops($direction);
+``
+
+
