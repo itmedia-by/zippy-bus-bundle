@@ -52,13 +52,13 @@ class DateTest extends TestCase
     {
         $date = ScheduleDate::createWeekend();
         $this->assertEquals(7, $date->getWeekDay());
-        $this->assertEquals(ScheduleDate::WEEKEND, $date->getTypeDay());
+        $this->assertTrue($date->isWeekend());
     }
 
 
     public function testCreateWorkday()
     {
         $date = ScheduleDate::createWorkday();
-        $this->assertEquals(ScheduleDate::WORKDAY, $date->getTypeDay());
+        $this->assertFalse($date->isWeekend());
     }
 }

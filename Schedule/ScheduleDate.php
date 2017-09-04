@@ -15,9 +15,6 @@ class ScheduleDate
      */
     private $datetime;
 
-    const WORKDAY = 'workday';
-
-    const WEEKEND = 'weekend';
 
     /**
      * Date constructor.
@@ -29,16 +26,25 @@ class ScheduleDate
     }
 
 
+    /**
+     * Текущая дата
+     * @return ScheduleDate
+     */
     public static function createNow(): ScheduleDate
     {
-        return new ScheduleDate(new \DateTimeImmutable('now'));
+        return new self(new \DateTimeImmutable('now'));
     }
 
 
+    /**
+     * Выходной день
+     * @return ScheduleDate
+     * @throws \Exception
+     */
     public static function createWeekend(): ScheduleDate
     {
         $datetime = new \DateTimeImmutable('now');
-        $day = (int)$datetime->format('N');
+        $day = self::parseDayNumber($datetime);
 
         if ($day !== 7) {
             $datetime = $datetime->add(
@@ -46,14 +52,20 @@ class ScheduleDate
                     sprintf('P%sD', 7 - $day)
                 ));
         }
-        return new ScheduleDate($datetime);
+        return new self($datetime);
     }
 
 
+    /**
+     * Рабочий день
+     *
+     * @return ScheduleDate
+     * @throws \Exception
+     */
     public static function createWorkday(): ScheduleDate
     {
         $datetime = new \DateTimeImmutable('now');
-        $day = (int)$datetime->format('N');
+        $day = self::parseDayNumber($datetime);
 
         if ($day > 5) {
             $datetime = $datetime->sub(
@@ -61,7 +73,7 @@ class ScheduleDate
                     sprintf('P2D')
                 ));
         }
-        return new ScheduleDate($datetime);
+        return new self($datetime);
     }
 
 
@@ -71,18 +83,32 @@ class ScheduleDate
      */
     public function getWeekDay(): int
     {
-        $day = (int)$this->datetime->format('N');
+        return self::parseDayNumber($this->datetime);
+    }
 
-        if ((int)$this->datetime->format('H') < 4) {
+
+    /**
+     * Выходной день?
+     * @return boolean
+     */
+    public function isWeekend(): bool
+    {
+        return in_array($this->getWeekDay(), [6, 7], true);
+    }
+
+
+    /**
+     * Определить день недели (для расписания)
+     * @param \DateTimeImmutable $datetime
+     * @return int
+     */
+    private static function parseDayNumber(\DateTimeImmutable $datetime): int
+    {
+        $day = (int)$datetime->format('N');
+        if ((int)$datetime->format('H') < 4) {
             $day = $day === 1 ? 7 : $day - 1;
         }
-
         return $day;
     }
 
-
-    public function getTypeDay(): string
-    {
-        return in_array($this->getWeekDay(), [6, 7], true) ? self::WEEKEND : self::WORKDAY;
-    }
 }
