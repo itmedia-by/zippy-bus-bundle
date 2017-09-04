@@ -1,7 +1,7 @@
 {
   "name": "itmedia/zippy-bus-bundle",
   "type": "symfony-bundle",
-  "description": "",
+  "description": "Интеграция с сервисом ZippyBus.com",
   "homepage": "https://github.com/itmedia-by/zippy-bus-bundle",
   "license": "MIT",
   "authors": [
